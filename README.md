@@ -11,36 +11,49 @@ A decentralized, cloud-integrated IoT ecosystem designed to track real-time grid
 
 The system is engineered using a robust, decoupled **4-Tier Architecture** to achieve high scaling, sub-millisecond data synchronization, and zero server-side maintenance.
 
-```text
-+--------------------------------------------------------------------+
+```mermaid
+flowchart TB
+    %% 💡 স্টাইলিং ও থিমিং কনফিগারেশন
+    classDef hardware fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff;
+    classDef database fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#000;
+    classDef server fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff;
+    classDef client fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
 
-| ⚡ [Edge Hardware Layer]                                           |
-| Distributed NodeMCU ESP32 Dual-Core Microcontrollers at Consumer Ends|
-+--------------------------------------------------------------------+
-                                 │
-                                 ▼ (Real-time Pings via WebSockets)
-+--------------------------------------------------------------------+
+    subgraph Edge_Hardware_Layer [⚡ EDGE HARDWARE LAYER]
+        H1[ESP32 Field Node 1.0]:::hardware
+        H2[ESP32 Field Node 2.0]:::hardware
+        H3[ESP32 Field Node 3.0]:::hardware
+    end
 
-| 🔥 [Cloud Database Layer]                                          |
-| Firebase NoSQL Realtime Database (Hierarchical JSON Pipeline)       |
-+--------------------------------------------------------------------+
-                                 │
-                                 ▼ (Programmatic Data Abstraction)
-+--------------------------------------------------------------------+
+    subgraph Cloud_Database_Layer [🔥 CLOUD CORE LAYER]
+        FB[(Firebase Realtime Database)]:::database
+        FCM[Firebase Cloud Messaging API]:::server
+    end
 
-| ⚙️ [Utility Analytics Layer]                                        |
-| Authenticated Admin Dashboard (`admin.html`)                       |
-| Core Fault Engine, Master Headend, & Multi-Feeder Control Switches |
-+--------------------------------------------------------------------+
-                                 │
-                                 ▼ (Client Proxy / Data Masking)
-+--------------------------------------------------------------------+
+    subgraph Utility_Analytics_Hub [⚙️ UTILITY HUB]
+        Admin[Secure Admin Portal: admin.html]:::server
+        Engine[Intelligent Fault/Breaker Decoder]:::server
+    end
 
-| 📱 [Consumer Application Layer]                                     |
-| Standalone Installable Progressive Web App (PWA)                   |
-| 2-Column Responsive Card Grid & Historical Logging Visualizations  |
-+--------------------------------------------------------------------+
+    subgraph Consumer_Application_Layer [📱 CLIENT LAYER]
+        PWA[Standalone Consumer App: index.html]:::client
+        Worker[Service Worker: Offline Cache]:::client
+    end
+
+    %% 🔗 কানেক্টিভিটি ও ডেটা ফ্লো লুপ
+    H1 & H2 & H3 -->|Continuous Handshake / JSON Payload| FB
+    FB <-->|WebSocket Stream / Zero Latency| Engine
+    Engine -->|Render Topology & Fault Sirens| Admin
+    
+    %% পুশ নোটিফিকেশন এপিআই রুট
+    Engine -->|Trigger Alerts on Sequence Break| FCM
+    FCM -->|Targeted Push Notification API| PWA
+    
+    %% ক্লায়েন্ট অ্যাবস্ট্রাকশন লেয়ার (ডাটা মাস্কিং)
+    FB -->|Data Masking Proxy / Abstract Outages| PWA
+    PWA <-->|Local Assets Validation| Worker
 ```
+
 
 
 ## 🧠 Core Engineering Innovatons & Algorithms
