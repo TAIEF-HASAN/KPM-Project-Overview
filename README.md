@@ -1,7 +1,5 @@
-# KPM-Project-Overview
-An enterprise-level decentralized IoT smart grid monitoring system designed to automate fault localization and decode sub-station anomalies in real-time.
-
-markdown# 🔋 Kalkini Power Monitor (KPM) v3.0 — Enterprise Smart Grid Monitoring System
+markdown
+# 🔋 Kalkini Power Monitor (KPM) v3.0 — Enterprise Smart Grid Monitoring System
 
 A decentralized, cloud-integrated IoT ecosystem designed to track real-time grid telemetry, automate fault localization, and decode sub-station anomalies without relying on expensive, legacy SCADA infrastructure. 
 
@@ -13,7 +11,32 @@ A decentralized, cloud-integrated IoT ecosystem designed to track real-time grid
 
 The system is engineered using a robust, decoupled **4-Tier Architecture** to achieve high scaling, sub-millisecond data synchronization, and zero server-side maintenance.
 
-সতর্ক হয়ে কোড ব্যবহার করুন।+--------------------------------------------------------------------+| ⚡ [Edge Hardware Layer]                                           || Distributed NodeMCU ESP32 Dual-Core Microcontrollers at Consumer Ends|+--------------------------------------------------------------------+│ (Real-time Pings via WebSockets)▼+--------------------------------------------------------------------+| 🔥 [Cloud Database Layer]                                          || Firebase NoSQL Realtime Database (Hierarchical JSON Pipeline)       |+--------------------------------------------------------------------+│ (Programmatic Data Abstraction)▼+--------------------------------------------------------------------+| ⚙️ [Utility Analytics Layer]                                        || Authenticated Admin Dashboard (admin.html)                       || Core Fault Engine, Master Headend, & Multi-Feeder Control Switches |+--------------------------------------------------------------------+│ (Client Proxy / Data Masking)▼+--------------------------------------------------------------------+| 📱 [Consumer Application Layer]                                     || Standalone Installable Progressive Web App (PWA)                   || 2-Column Responsive Card Grid & Historical Logging Visualizations  |+--------------------------------------------------------------------+
+সতর্ক হয়ে কোড ব্যবহার করুন।
++--------------------------------------------------------------------+
+| ⚡ [Edge Hardware Layer] |
+| Distributed NodeMCU ESP32 Dual-Core Microcontrollers at Consumer Ends|
++--------------------------------------------------------------------+
+│ (Real-time Pings via WebSockets)
+▼
++--------------------------------------------------------------------+
+| 🔥 [Cloud Database Layer] |
+| Firebase NoSQL Realtime Database (Hierarchical JSON Pipeline) |
++--------------------------------------------------------------------+
+│ (Programmatic Data Abstraction)
+▼
++--------------------------------------------------------------------+
+| ⚙️ [Utility Analytics Layer] |
+| Authenticated Admin Dashboard (admin.html) |
+| Core Fault Engine, Master Headend, & Multi-Feeder Control Switches |
++--------------------------------------------------------------------+
+│ (Client Proxy / Data Masking)
+▼
++--------------------------------------------------------------------+
+| 📱 [Consumer Application Layer] |
+| Standalone Installable Progressive Web App (PWA) |
+| 2-Column Responsive Card Grid & Historical Logging Visualizations |
++--------------------------------------------------------------------+
+
 ---
 
 ## 🧠 Core Engineering Innovatons & Algorithms
@@ -89,3 +112,4 @@ To survive harsh deployment fields with unstable networks, the system is fully d
 * **Three-Phase Load Balance Optimization:** Interfacing **SCT-013 CT Sensors** with the ESP32 array to execute live amperage variance analysis; triggering alerts if current load deviates over 15% across R, Y, and B phases to prevent transformer burnouts.
 * **Predictive Thermal Overhead Warnings:** Modeling historic power curves to detect overheating thresholds on critical transformers before a physical terminal explosion happens.
 * **Differential Distribution Loss Analysis:** Calculating variance between sub-station feeder outputs
+
