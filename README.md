@@ -11,33 +11,37 @@ A decentralized, cloud-integrated IoT ecosystem designed to track real-time grid
 
 The system is engineered using a robust, decoupled **4-Tier Architecture** to achieve high scaling, sub-millisecond data synchronization, and zero server-side maintenance.
 
-সতর্ক হয়ে কোড ব্যবহার করুন।
-+--------------------------------------------------------------------+
-| ⚡ [Edge Hardware Layer] |
-| Distributed NodeMCU ESP32 Dual-Core Microcontrollers at Consumer Ends|
-+--------------------------------------------------------------------+
-│ (Real-time Pings via WebSockets)
-▼
-+--------------------------------------------------------------------+
-| 🔥 [Cloud Database Layer] |
-| Firebase NoSQL Realtime Database (Hierarchical JSON Pipeline) |
-+--------------------------------------------------------------------+
-│ (Programmatic Data Abstraction)
-▼
-+--------------------------------------------------------------------+
-| ⚙️ [Utility Analytics Layer] |
-| Authenticated Admin Dashboard (admin.html) |
-| Core Fault Engine, Master Headend, & Multi-Feeder Control Switches |
-+--------------------------------------------------------------------+
-│ (Client Proxy / Data Masking)
-▼
-+--------------------------------------------------------------------+
-| 📱 [Consumer Application Layer] |
-| Standalone Installable Progressive Web App (PWA) |
-| 2-Column Responsive Card Grid & Historical Logging Visualizations |
+```text
 +--------------------------------------------------------------------+
 
----
+| ⚡ [Edge Hardware Layer]                                           |
+| Distributed NodeMCU ESP32 Dual-Core Microcontrollers at Consumer Ends|
++--------------------------------------------------------------------+
+                                 │
+                                 ▼ (Real-time Pings via WebSockets)
++--------------------------------------------------------------------+
+
+| 🔥 [Cloud Database Layer]                                          |
+| Firebase NoSQL Realtime Database (Hierarchical JSON Pipeline)       |
++--------------------------------------------------------------------+
+                                 │
+                                 ▼ (Programmatic Data Abstraction)
++--------------------------------------------------------------------+
+
+| ⚙️ [Utility Analytics Layer]                                        |
+| Authenticated Admin Dashboard (`admin.html`)                       |
+| Core Fault Engine, Master Headend, & Multi-Feeder Control Switches |
++--------------------------------------------------------------------+
+                                 │
+                                 ▼ (Client Proxy / Data Masking)
++--------------------------------------------------------------------+
+
+| 📱 [Consumer Application Layer]                                     |
+| Standalone Installable Progressive Web App (PWA)                   |
+| 2-Column Responsive Card Grid & Historical Logging Visualizations  |
++--------------------------------------------------------------------+
+```
+
 
 ## 🧠 Core Engineering Innovatons & Algorithms
 
