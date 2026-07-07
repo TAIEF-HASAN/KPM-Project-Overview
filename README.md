@@ -117,3 +117,8 @@ To survive harsh deployment fields with unstable networks, the system is fully d
 * **Predictive Thermal Overhead Warnings:** Modeling historic power curves to detect overheating thresholds on critical transformers before a physical terminal explosion happens.
 * **Differential Distribution Loss Analysis:** Calculating variance between sub-station feeder outputs
 
+## Project Live link
+<a href="https://kalkinipowermonitor.web.app/" target="_blank">
+  <img src="https://img.shields.io/badge/View_Project-181717?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+
