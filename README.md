@@ -73,6 +73,12 @@ To prevent grid telemetry data leaks, avoid public panic, and secure critical in
 * **Public Tier:** Raw sensor breakdowns and sequence crashes are filtered out on consumer clients; user interfaces render a simplified, abstracted `Online (🟢)` or `Offline (🔴)` state.
 * **Admin Tier:** Full multi-feeder diagnostics, live hazard zones, line-loss estimations, and CRUD network configurations are accessible exclusively through an authenticated administration gate.
 
+### 4. Deterministic Edge-Failure Interceptor (Zero-Flicker Watchdog)
+Microcontrollers (ESP32) operating in harsh rural grid sectors often experience abrupt hardware fatalities (e.g., total surge destruction or immediate power loss) before they can dispatch a graceful "Offline" payload to the cloud gateway. This introduces a major synchronization trap where the cloud server continuously retains stale "Online" states.
+* **The Logic:** To bypass this physical constraint without overloading server-side operations, the framework implements a dual-layer **Deterministic Heartbeat Watchdog Interceptor** operating via client-side throttling windows (45-second fallback boundaries). It continuously audits millisecond differential delta gaps between transmission intervals and background timers.
+* **The Result:** The system maintains a 100% stable, zero-flicker live pipeline during active nodes. Upon a hard sudden edge failure, a locking cache flag is instantly triggered, compelling the infrastructure to forcefully broadcast an offline mutation layer across all concurrent dashboards without requiring any manual user page refreshes.
+
+
 ---
 
 ## 📂 Production NoSQL NoSQL Data Schematics (Firebase Model)
@@ -83,37 +89,46 @@ The database utilizes a highly normalized, dynamic NoSQL JSON structure to allow
 {
   "kalkini_power_monitor": {
     "system_control": {
-      "last_updated": "2026-07-07 11:20:00"
+      "last_updated": "2026-08-23 12:20:00"
     },
     "feeders": {
-      "feeder_khaserhat": {
-        "name": "খাসেরহাট ফিডার",
+      "feeder_paurashava": {
+        "name": "কালকিনি পৌরসভা ফিডার",
         "status": "Online"
       }
     },
     "areas": {
-      "area_4201": {
-        "name": "খাসেরহাট বাজার",
-        "feeder_id": "feeder_khaserhat",
+      "area_1877": {
+        "name": "কালকিনি পৌরসভা",
+        "feeder_id": "feeder_paurashava",
         "status": "Online",
+        "last_ping": "22/06/2026, 11:52:01 pm",
         "nodes": {
-          "node_1_main": {
-            "name": "খাসেরহাট মেইন মোড়",
+          "node_1_106": {
+            "name": "পৌরসভা মেইন মোড়",
             "status": "Online",
             "sequence": 1,
-            "last_ping": "2026-07-07 11:20:00"
+            "last_ping": "22/06/2026, 11:52:44 pm"
           },
-          "node_2_school": {
-            "name": "খাসেরহাট স্কুল রোড",
+          "node_2_460": {
+            "name": "পাঙ্গাশিয়া",
             "status": "Offline",
             "sequence": 2,
-            "last_ping": "2026-07-07 11:18:42"
+            "heartbeat": 43307,
+            "last_ping": "22/06/2026, 11:53:46 pm"
+          },
+          "node_3_097": {
+            "name": "ঝাউতলা",
+            "status": "Online",
+            "sequence": 3,
+            "last_ping": "22/06/2026, 11:54:16 pm"
           }
         }
       }
     }
   }
 }
+
 ```
 
 ---
@@ -129,6 +144,8 @@ To survive harsh deployment fields with unstable networks, the system is fully d
 * **Three-Phase Load Balance Optimization:** Interfacing **SCT-013 CT Sensors** with the ESP32 array to execute live amperage variance analysis; triggering alerts if current load deviates over 15% across R, Y, and B phases to prevent transformer burnouts.
 * **Predictive Thermal Overhead Warnings:** Modeling historic power curves to detect overheating thresholds on critical transformers before a physical terminal explosion happens.
 * **Differential Distribution Loss Analysis:** Calculating variance between sub-station feeder outputs
+* **Dual-Core Hardware Frequency Monitoring:** Interfacing ZMPT101B AC voltage step-down sensors with the ESP32’s secondary processing core to calculate dynamic Root Mean Square (RMS) line fluctuations and current load consumption in Amperes concurrently.
+
 
 ## Project Live link
 <a href="https://kalkinipowermonitor.web.app/" target="_blank">
