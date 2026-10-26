@@ -1,4 +1,3 @@
-markdown
 # 🔋 Kalkini Power Monitor (KPM) v3.0 — Enterprise Smart Grid Monitoring System
 
 A decentralized, cloud-integrated IoT ecosystem designed to track real-time grid telemetry, automate fault localization, and decode sub-station anomalies without relying on expensive, legacy SCADA infrastructure. 
@@ -54,9 +53,9 @@ flowchart TB
     PWA <-->|Local Assets Validation| Worker
 ```
 
+---
 
-
-## 🧠 Core Engineering Innovatons & Algorithms
+## 🧠 Core Engineering Innovations & Algorithms
 
 ### 1. Sequential Micro-Zone Fault Localization (Chain Breakdown Model)
 Instead of expensive transformer-level hardware metrics, KPM maps local grid regions using a dynamic **Sequential Chaining Array** (`Node[1] -> Node[2] -> Node[3]`).
@@ -73,18 +72,19 @@ To prevent grid telemetry data leaks, avoid public panic, and secure critical in
 * **Public Tier:** Raw sensor breakdowns and sequence crashes are filtered out on consumer clients; user interfaces render a simplified, abstracted `Online (🟢)` or `Offline (🔴)` state.
 * **Admin Tier:** Full multi-feeder diagnostics, live hazard zones, line-loss estimations, and CRUD network configurations are accessible exclusively through an authenticated administration gate.
 
-### 4. Deterministic Edge-Failure Interceptor (Zero-Flicker Watchdog)
+### 4. Conditional Edge-Failure Interceptor (Zero-Flicker Watchdog & State Recovery)
 Microcontrollers (ESP32) operating in harsh rural grid sectors often experience abrupt hardware fatalities (e.g., total surge destruction or immediate power loss) before they can dispatch a graceful "Offline" payload to the cloud gateway. This introduces a major synchronization trap where the cloud server continuously retains stale "Online" states.
-* **The Logic:** To bypass this physical constraint without overloading server-side operations, the framework implements a dual-layer **Deterministic Heartbeat Watchdog Interceptor** operating via client-side throttling windows (45-second fallback boundaries). It continuously audits millisecond differential delta gaps between transmission intervals and background timers.
-* **The Result:** The system maintains a 100% stable, zero-flicker live pipeline during active nodes. Upon a hard sudden edge failure, a locking cache flag is instantly triggered, compelling the infrastructure to forcefully broadcast an offline mutation layer across all concurrent dashboards without requiring any manual user page refreshes.
-
+* **The Logic:** To bypass this constraint without overloading server-side operations, the framework implements a dual-layer **Deterministic Heartbeat Watchdog Interceptor** operating via client-side throttling windows (45-second fallback boundaries). It continuously audits millisecond differential delta gaps between transmission intervals and background timers.
+* **The State Recovery Fix:** To ensure robust system testing during telemetry simulations, an explicit state validation flag (`window.isKpmOfflineForced`) controls the hard offline lock. When a live edge node or a simulated telemetry source re-establishes its connection (`status === "Online"`), the conditional logic instantly un-locks the forced isolation state layer across all active HTML5 DOM viewports without requiring manual user page refreshes.
 
 ---
 
-## 📂 Production NoSQL NoSQL Data Schematics (Firebase Model)
+## 📂 Production NoSQL Data Schematics (Firebase Model)
 
-The database utilizes a highly normalized, dynamic NoSQL JSON structure to allow fluid network additions via the Admin Portal without requiring backend code changes:
+The database utilizes highly optimized NoSQL JSON node layers to allow fluid telemetry tracking and multi-day retrospective log calculations:
 
+### 1. Active Feeder & Telemetry Node Hierarchy
+Allows real-time state mapping and live area status parsing across unique hardware IDs:
 ```json
 {
   "kalkini_power_monitor": {
@@ -116,20 +116,47 @@ The database utilizes a highly normalized, dynamic NoSQL JSON structure to allow
             "sequence": 2,
             "heartbeat": 43307,
             "last_ping": "22/06/2026, 11:53:46 pm"
-          },
-          "node_3_097": {
-            "name": "ঝাউতলা",
-            "status": "Online",
-            "sequence": 3,
-            "last_ping": "22/06/2026, 11:54:16 pm"
           }
         }
       }
     }
   }
 }
-
 ```
+
+### 2. Sequential Outage Log Structure (`power_status`)
+The client analytics engine processes sequential `Offline` $\rightarrow$ `Online` transitions from the root database node. Durations are calculated dynamically on the fly based on specialized local string time formatting (`en-BD`) to populate the interactive retrospective bar charts:
+```json
+{
+  "power_status": {
+    "-OU1z8_MkBc9XyA1": {
+      "status": "Offline",
+      "time": "10/26/2026, 2:00:00 PM"
+    },
+    "-OU1z9_HkLp2WzR8": {
+      "status": "Online",
+      "time": "10/26/2026, 2:45:00 PM"
+    }
+  }
+}
+```
+
+---
+
+## 💻 Decoupled Testing & Local Telemetry Simulator
+
+To run integration testing for multi-day retrospective charts without hardware node dependencies, the pipeline uses a standalone mock script powered by the **Firebase Admin SDK** and a secure Service Account Key structure.
+
+### Setting Up the Telemetry Script
+1. Clone the repository structure and initialize dependencies:
+   ```bash
+   npm install firebase-admin
+   ```
+2. Secure your project by placing your `serviceAccountKey.json` directly into the root folder directory tree.
+3. Boot up the lightweight local simulation cluster to push live multi-day dynamic logs into the NoSQL cloud layers:
+   ```bash
+   node mock-server.js
+   ```
 
 ---
 
@@ -143,7 +170,7 @@ To survive harsh deployment fields with unstable networks, the system is fully d
 ## 📈 R&D Scalability Roadmap (Next Enterprise Phases)
 * **Three-Phase Load Balance Optimization:** Interfacing **SCT-013 CT Sensors** with the ESP32 array to execute live amperage variance analysis; triggering alerts if current load deviates over 15% across R, Y, and B phases to prevent transformer burnouts.
 * **Predictive Thermal Overhead Warnings:** Modeling historic power curves to detect overheating thresholds on critical transformers before a physical terminal explosion happens.
-* **Differential Distribution Loss Analysis:** Calculating variance between sub-station feeder outputs
+* **Differential Distribution Loss Analysis:** Calculating variance between sub-station feeder outputs.
 * **Dual-Core Hardware Frequency Monitoring:** Interfacing ZMPT101B AC voltage step-down sensors with the ESP32’s secondary processing core to calculate dynamic Root Mean Square (RMS) line fluctuations and current load consumption in Amperes concurrently.
 
 
